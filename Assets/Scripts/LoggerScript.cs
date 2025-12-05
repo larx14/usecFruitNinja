@@ -13,6 +13,10 @@ using UnityEngine;
         public Transform newcamera;
         public Transform leftController;
         public Transform rightController;
+        [SerializeField] private int repetitionLimit = 30;
+        private int _repetitionCount = 0;
+        public event Action OnRepetitionLimitReached;
+
 
         // ToDo: If you have GameObjects that you want to log (besides left controller, right controller, and head), you need to give them tags
         [Header("Elements with prefabTags to log")]
@@ -26,14 +30,14 @@ using UnityEngine;
         private readonly DateTime _epochStart = new DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
         private bool _isLogging;
 
+
+void Awake()
+{
+    DontDestroyOnLoad(gameObject);
+}
+
         void Start()
         {
-              var rig = GameObject.Find("[BuildingBlock] Camera Rig"); // change to your rig's name
-    newcamera = rig.transform.Find("TrackingSpace/CenterEyeAnchor");
-    leftController = rig.transform.Find("TrackingSpace/LeftHandAnchor");
-    rightController = rig.transform.Find("TrackingSpace/RightHandAnchor");
-    Debug.Log($"Logger assigned head: {newcamera}, left: {leftController}, right: {rightController}");
-
 
             Debug.Log($"[LoggerScript] Logger started! Application.persistentDataPath: {Application.persistentDataPath}");
             basePath = Application.persistentDataPath + "/";
@@ -45,7 +49,8 @@ using UnityEngine;
             {
                 var timestamp = (DateTime.UtcNow - _epochStart).TotalMilliseconds;
                 var events = string.Join("| ", _eventsTriggered);
-                var lineToWrite = $"{Time.frameCount}{Delim}{Time.realtimeSinceStartup}{Delim}{timestamp}{Delim}{events}{Delim}";
+                var lineToWrite = $"{Time.frameCount}{Delim}{Time.realtimeSinceStartup}{Delim}{timestamp}{Delim}{events}{Delim}{_repetitionCount}{Delim}";
+
 
                 // Log HMD position and rotation
                 // ToDo: Check your Version of the XR Plugin: If you have a OVRCameraRig you need to find the main camera to assign it. If you have an XROrigin xrOrigin, you might need to call xrOrigin.Camera.transform.position etc.
@@ -106,26 +111,24 @@ using UnityEngine;
                 _eventsTriggered.Clear();
             }
         }
-        public void TestLogging()
-    {
-        StartLogging(1,1, "",1,1,1,1,1, ""); 
-    }
-
+     
         // ToDo: Change this method to log relevant information in the file name - you need a ParticipantID, maybe a SessionID if you plan to take a break between sessions, maybe a RepetitionID for muliple repetitions of your movement (or you can also get this by the timestamp later), and maybe more if you want to log game specific details
-        public void StartLogging(int participant, int session, string condition, int handSelection, int playerSelection, int totalPoints, int pointsPLayerOne, int pointsPlayerTwo, string file_info = "")
+        public void StartLogging(string participant, int session)
         {
-            string gameInfo = $"part~{participant}_sess~{session}_cond~{condition}_handSel~{handSelection}_player~{playerSelection}_totalP~{totalPoints}_PLayerOneP~{pointsPLayerOne}_PlayerTwoP~{pointsPlayerTwo}";
+            string gameInfo = $"part~{participant}_sess~{session}";
             _isLogging = true;
             var ctime = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
             if (!Directory.Exists(basePath))
             {
                 Directory.CreateDirectory(basePath);
             }
-            if (file_info != "")
+          /*  if (file_info != "")
             {
                 file_info = "_" + file_info;
-            }
-            var fileName = fileNamePrefix + file_info + "_" + DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + gameInfo + ".tsv";
+            } **/ 
+            var fileName = fileNamePrefix + 
+           //  file_info + 
+            "_" + DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + gameInfo + ".tsv";
             var filePath = basePath + fileName;
             Debug.Log($"[LoggerScript] Logging to file: {filePath}");
             if (File.Exists(filePath))
@@ -212,6 +215,7 @@ using UnityEngine;
                    $"{prefix}realtimeSinceStartup{Delim}" +
                    $"{prefix}unixTimestamp{Delim}" +
                    $"{prefix}Event{Delim}" +
+                    $"{prefix}Repetition{Delim}" +
                    $"{prefix}{hmdPosition}{position}{x}{Delim}" +
                    $"{prefix}{hmdPosition}{position}{y}{Delim}" +
                    $"{prefix}{hmdPosition}{position}{z}{Delim}" +
@@ -256,4 +260,36 @@ using UnityEngine;
             }
             return filePath;
         }
+
+     public void AddRepetition()
+{
+    _repetitionCount++;
+    AddEvent($"Repetition_{_repetitionCount}");
+    Debug.Log($"[LoggerScript] Repetition {_repetitionCount} counted.");
+
+    if (_repetitionCount >= repetitionLimit)
+    {
+        Debug.Log("[LoggerScript] Repetition limit reached. Stopping logging...");
+        StopLogging();
+        OnRepetitionLimitReached?.Invoke();   // notify game logic
+    }
+}
+public void AssignXRReferences()
+{
+    var rig = GameObject.Find("[BuildingBlock] Camera Rig");
+    if (rig != null)
+    {
+        newcamera = rig.transform.Find("TrackingSpace/CenterEyeAnchor");
+        leftController = rig.transform.Find("TrackingSpace/LeftHandAnchor");
+        rightController = rig.transform.Find("TrackingSpace/RightHandAnchor");
+        Debug.Log($"[LoggerScript] XR references reassigned. Head: {newcamera}, Left: {leftController}, Right: {rightController}");
+    }
+    else
+    {
+        Debug.LogWarning("[LoggerScript] Camera Rig not found!");
+    }
+}
+
+
+
     }
