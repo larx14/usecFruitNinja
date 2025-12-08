@@ -2464,8 +2464,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fruits:
-  - {fileID: 4702710921200691714, guid: da54bf3dc3ead824d86c3256899a30a4, type: 3}
-  - {fileID: 6927363718158558104, guid: 5a9ec38a5d2ad3d49bd0caae4d2396a0, type: 3}
+  - {fileID: 8292600945184373571, guid: cd71e48862ae6264dbb53424a2f74026, type: 3}
+  - {fileID: 185865645826707467, guid: 0a05d6a1fad5b924ab7c42aaa4dae685, type: 3}
   spawnInterval: 1.6
   spawnForce: 0
   xRange: 0.5
@@ -2481,10 +2481,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 2}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 530106053}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &408120589
 GameObject:
@@ -3507,6 +3507,7 @@ Transform:
   - {fileID: 1716806671}
   - {fileID: 1992053836}
   - {fileID: 7116310}
+  - {fileID: 404992523}
   m_Father: {fileID: 576493998}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &532268787
@@ -12702,4 +12703,3 @@ SceneRoots:
   - {fileID: 612260261}
   - {fileID: 466473676}
   - {fileID: 329202920}
-  - {fileID: 404992523}

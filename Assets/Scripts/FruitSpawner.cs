@@ -10,7 +10,7 @@ public class FruitSpawner : MonoBehaviour
 
     [Header("Camera Follow")]
     public float distanceInFront = 0.5f;   // 50cm in front of camera
-    public float heightAbove = 1.5f;       // spawn above player's head
+    public float heightAbove = 0.5f;       // spawn above player's head
 
     private Transform cam;
 
@@ -26,7 +26,6 @@ public class FruitSpawner : MonoBehaviour
 
         // Keep spawner in front & above camera, but NOT parented to it
         transform.position = cam.position + cam.forward * distanceInFront + Vector3.up * heightAbove;
-        transform.rotation = Quaternion.LookRotation(cam.forward);
     }
 
     void SpawnFruit()
