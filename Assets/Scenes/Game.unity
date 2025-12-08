@@ -2468,6 +2468,9 @@ MonoBehaviour:
   - {fileID: 6927363718158558104, guid: 5a9ec38a5d2ad3d49bd0caae4d2396a0, type: 3}
   spawnInterval: 1.6
   spawnForce: 0
+  xRange: 0.5
+  distanceInFront: 0.5
+  heightAbove: 1.5
 --- !u!4 &404992523
 Transform:
   m_ObjectHideFlags: 0
@@ -2477,11 +2480,11 @@ Transform:
   m_GameObject: {fileID: 404992521}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.3, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 2}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1686989899}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &408120589
 GameObject:
@@ -3808,7 +3811,7 @@ MonoBehaviour:
   requestRecordAudioPermissionOnStartup: 0
   requestPassthroughCameraAccessPermissionOnStartup: 0
   _localDimming: 1
-  _trackingOriginType: 1
+  _trackingOriginType: 0
   usePositionTracking: 1
   useRotationTracking: 1
   useIPDInPositionTracking: 1
@@ -10339,8 +10342,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 404992523}
+  m_Children: []
   m_Father: {fileID: 530106053}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1686989900
@@ -12700,3 +12702,4 @@ SceneRoots:
   - {fileID: 612260261}
   - {fileID: 466473676}
   - {fileID: 329202920}
+  - {fileID: 404992523}
