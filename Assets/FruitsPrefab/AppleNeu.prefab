@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4516538269451057256}
   - component: {fileID: 8789837987107004976}
   - component: {fileID: 8610462130917175823}
+  - component: {fileID: -6662431984955301701}
   m_Layer: 0
   m_Name: AppleNeu
   m_TagString: Untagged
@@ -150,3 +151,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de457a9c8fa4694e86ade4052bc92d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6662431984955301701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702710921200691714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2775f44ef8a1e04da97ee9610091922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  moveSpeed: 2
+  rotateSpeed: 5
+  fixedHeight: 1.5
+  maxLifetime: 10
