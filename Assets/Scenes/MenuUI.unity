@@ -8630,7 +8630,8 @@ MonoBehaviour:
   leftController: {fileID: 0}
   rightController: {fileID: 0}
   repetitionLimit: 30
-  prefabTags: []
+  prefabTags:
+  - Sword
 --- !u!4 &1353392487
 Transform:
   m_ObjectHideFlags: 0

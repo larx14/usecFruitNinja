@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 
@@ -104,11 +105,14 @@ void Awake()
                                        $"{rotation.x}{Delim}{rotation.y}{Delim}{rotation.z}{Delim}{rotation.w}{Delim}" +
                                        $"{localScale.x}{Delim}{localScale.y}{Delim}{localScale.z}{Delim}" +
                                        $"{lossyScale.x}{Delim}{lossyScale.y}{Delim}{lossyScale.z}{Delim}";
+                                        Debug.Log("Tag" + instance.tag); 
                     }
+                    
                 }
                 
                 _streamWriter.WriteLine(lineToWrite);
                 _eventsTriggered.Clear();
+               
             }
         }
      

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4334314812708720166}
   m_Layer: 0
   m_Name: LongSword
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 7256057588077515077}
   m_Layer: 0
   m_Name: LongSwordMesh
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
