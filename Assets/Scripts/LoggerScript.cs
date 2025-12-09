@@ -276,6 +276,7 @@ void Awake()
         Debug.Log("[LoggerScript] Repetition limit reached. Stopping logging...");
         StopLogging();
         OnRepetitionLimitReached?.Invoke();   // notify game logic
+         Application.Quit(); // exits the application
     }
 }
 public void AssignXRReferences()
