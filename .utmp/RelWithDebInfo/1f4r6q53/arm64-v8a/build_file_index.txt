@@ -1,0 +1,2 @@
+/Users/danielpomberg/Documents/GitHub/usecFruitNinja/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/CMakeLists.txt
+/Users/danielpomberg/Documents/GitHub/usecFruitNinja/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity/CMakeLists.txt

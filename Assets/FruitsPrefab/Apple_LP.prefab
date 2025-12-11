@@ -70,40 +70,19 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 42e8ffd05fc54364db01accdc94dd410, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5888042316344705321}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 42e8ffd05fc54364db01accdc94dd410, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 610782630048929776}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 42e8ffd05fc54364db01accdc94dd410, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1748291709599947753}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 42e8ffd05fc54364db01accdc94dd410, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3073868244010377801}
   m_SourcePrefab: {fileID: 100100000, guid: 42e8ffd05fc54364db01accdc94dd410, type: 3}
 --- !u!1 &766660720635501617 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 42e8ffd05fc54364db01accdc94dd410, type: 3}
   m_PrefabInstance: {fileID: 460158865807532384}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &5888042316344705321
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 766660720635501617}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.047748424
-  m_Center: {x: 0.00016973354, y: 0.042621635, z: -0.00016795285}
 --- !u!114 &610782630048929776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de457a9c8fa4694e86ade4052bc92d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sliceSound: {fileID: 8300000, guid: 3e9c22a1d710843cb826d4dbc8a7e6b5, type: 3}
+  hitEffectPrefab: {fileID: 9175501121101914884, guid: da15c9b5c1161498c91dc60e60653fe1, type: 3}
 --- !u!54 &1748291709599947753
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -143,3 +124,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &-3073868244010377801
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766660720635501617}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.047748424
+  m_Center: {x: 0.00016973354, y: 0.042621635, z: -0.00016795285}
