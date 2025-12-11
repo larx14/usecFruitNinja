@@ -9,9 +9,10 @@ public class AssignIDController : MonoBehaviour
     private int sessionID =1; 
     void Start()
     {
+        string deviceID = SystemInfo.deviceUniqueIdentifier.Substring(0, 6); // shorten for readability
         var data = ParticipantStorage.Load();
         int nextIDnum = data.ids.Count + 1;
-        currentID = "P" + nextIDnum.ToString("000");
+         currentID = $"{deviceID}_P{nextIDnum:000}";
 
         assignedIDText.text = "Ihre Teilnehmer ID: " + currentID;
 

@@ -27,7 +27,8 @@ public class Fruit : MonoBehaviour
         {
             Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
         }
-
+        var logger = FindFirstObjectByType<LoggerScript>();
+        logger.AddRepetition(); 
         // 3) Frucht zerstören
         Destroy(gameObject);
     }
