@@ -57,3 +57,4 @@ public class FruitScript : MonoBehaviour
         Destroy(gameObject);
     }
 }
+
