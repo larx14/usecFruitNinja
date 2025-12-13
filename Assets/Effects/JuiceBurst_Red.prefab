@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7348673102308808376}
   - component: {fileID: 4387852256236279981}
   m_Layer: 0
-  m_Name: JuiceBurst
+  m_Name: JuiceBurst_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

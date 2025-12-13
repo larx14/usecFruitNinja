@@ -1,35 +1,59 @@
 using UnityEngine;
 
-public class Fruit : MonoBehaviour
+public class FruitScript : MonoBehaviour
 {
     [Header("Feedback")]
-    public AudioClip sliceSound;        // Sound beim Treffen
-    public GameObject hitEffectPrefab;  // Saft-/Hit-Effekt Prefab
+    public AudioClip sliceSound;
+    public GameObject hitEffectPrefab;
 
-    private bool isSliced = false;      // verhindert doppeltes Auslösen
+    [Header("Despawn")]
+    public float despawnAfterSeconds = 3f;
+
+    private Rigidbody rb;
+    private bool isSliced = false;
+    private bool despawnScheduled = false;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        // When the fruit has almost stopped moving, start despawn timer
+        if (!despawnScheduled && rb.linearVelocity.magnitude < 0.05f)
+        {
+            despawnScheduled = true;
+            Invoke(nameof(Despawn), despawnAfterSeconds);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Nur reagieren, wenn noch nicht sliced UND echtes Schwert
         if (isSliced) return;
         if (!other.CompareTag("Sword")) return;
 
         isSliced = true;
+        SliceFruit();
+    }
 
-        // 1) Slice Sound abspielen
+    private void SliceFruit()
+    {
         if (sliceSound != null)
-        {
             AudioSource.PlayClipAtPoint(sliceSound, transform.position);
-        }
 
-        // 2) Saft-/Hit-Effekt erzeugen
         if (hitEffectPrefab != null)
-        {
             Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
-        }
-        var logger = FindFirstObjectByType<LoggerScript>();
-        logger.AddRepetition(); 
-        // 3) Frucht zerstören
+
+        LoggerScript logger = FindObjectOfType<LoggerScript>();
+        if (logger != null)
+            logger.AddRepetition();
+
+        Destroy(gameObject);
+    }
+
+    private void Despawn()
+    {
         Destroy(gameObject);
     }
 }
