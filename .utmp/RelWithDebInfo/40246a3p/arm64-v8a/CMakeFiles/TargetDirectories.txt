@@ -1,0 +1,5 @@
+C:/Users/larau/Documents/GitHub/usecFruitNinja/.utmp/RelWithDebInfo/40246a3p/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/larau/Documents/GitHub/usecFruitNinja/.utmp/RelWithDebInfo/40246a3p/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/larau/Documents/GitHub/usecFruitNinja/.utmp/RelWithDebInfo/40246a3p/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Users/larau/Documents/GitHub/usecFruitNinja/.utmp/RelWithDebInfo/40246a3p/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Users/larau/Documents/GitHub/usecFruitNinja/.utmp/RelWithDebInfo/40246a3p/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir

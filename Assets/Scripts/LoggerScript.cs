@@ -44,77 +44,67 @@ public class LoggerScript : MonoBehaviour
 
     void Update()
     {
-        if (!_isLogging) return;
-
-        var timestamp = (DateTime.UtcNow - _epochStart).TotalMilliseconds;
-        var events = string.Join("| ", _eventsTriggered);
-
-        string lineToWrite =
-            $"{Time.frameCount}{Delim}" +
-            $"{Time.realtimeSinceStartup}{Delim}" +
-            $"{timestamp}{Delim}" +
-            $"{events}{Delim}" +
-            $"{_repetitionCount}{Delim}";
-
-        // ---------------- HMD ----------------
-        var hmdPos = newcamera.transform.position;
-        var hmdRot = newcamera.transform.rotation;
-
-        lineToWrite +=
-            $"{hmdPos.x}{Delim}{hmdPos.y}{Delim}{hmdPos.z}{Delim}" +
-            $"{hmdRot.eulerAngles.x}{Delim}{hmdRot.eulerAngles.y}{Delim}{hmdRot.eulerAngles.z}{Delim}" +
-            $"{hmdRot.x}{Delim}{hmdRot.y}{Delim}{hmdRot.z}{Delim}{hmdRot.w}{Delim}";
-
-        // ---------------- LEFT CONTROLLER ----------------
-        if (leftController != null)
-        {
-            var p = leftController.position;
-            var r = leftController.rotation;
-
-            lineToWrite +=
-                $"{p.x}{Delim}{p.y}{Delim}{p.z}{Delim}" +
-                $"{r.eulerAngles.x}{Delim}{r.eulerAngles.y}{Delim}{r.eulerAngles.z}{Delim}" +
-                $"{r.x}{Delim}{r.y}{Delim}{r.z}{Delim}{r.w}{Delim}";
-        }
-        else
-        {
-            lineToWrite += new string(Delim, 10);
-        }
-
-        // ---------------- RIGHT CONTROLLER ----------------
-        if (rightController != null)
-        {
-            var p = rightController.position;
-            var r = rightController.rotation;
-
-            lineToWrite +=
-                $"{p.x}{Delim}{p.y}{Delim}{p.z}{Delim}" +
-                $"{r.eulerAngles.x}{Delim}{r.eulerAngles.y}{Delim}{r.eulerAngles.z}{Delim}" +
-                $"{r.x}{Delim}{r.y}{Delim}{r.z}{Delim}{r.w}{Delim}";
-        }
-        else
-        {
-            lineToWrite += new string(Delim, 10);
-        }
-
-        // ---------------- PREFABS ----------------
-        foreach (var tag in prefabTags)
-        {
-            var instances = GameObject.FindGameObjectsWithTag(tag);
-            foreach (var obj in instances)
+        if (_isLogging)
             {
-                var p = obj.transform.position;
-                var r = obj.transform.rotation;
-                var ls = obj.transform.localScale;
-                var lossy = obj.transform.lossyScale;
+                var timestamp = (DateTime.UtcNow - _epochStart).TotalMilliseconds;
+                var events = string.Join("| ", _eventsTriggered);
+                var lineToWrite = $"{Time.frameCount}{Delim}{Time.realtimeSinceStartup}{Delim}{timestamp}{Delim}{events}{Delim}{_repetitionCount}{Delim}";
 
-                lineToWrite +=
-                    $"{p.x}{Delim}{p.y}{Delim}{p.z}{Delim}" +
-                    $"{r.eulerAngles.x}{Delim}{r.eulerAngles.y}{Delim}{r.eulerAngles.z}{Delim}" +
-                    $"{r.x}{Delim}{r.y}{Delim}{r.z}{Delim}{r.w}{Delim}" +
-                    $"{ls.x}{Delim}{ls.y}{Delim}{ls.z}{Delim}" +
-                    $"{lossy.x}{Delim}{lossy.y}{Delim}{lossy.z}{Delim}";
-            }
+
+                // Log HMD position and rotation
+                // ToDo: Check your Version of the XR Plugin: If you have a OVRCameraRig you need to find the main camera to assign it. If you have an XROrigin xrOrigin, you might need to call xrOrigin.Camera.transform.position etc.
+                // IMPORTANT: Make sure to check that you track the correct data here as it can easily be messed up since this part changes depending on the used Toolkit for MR!
+                var hmdPosition = newcamera.transform.position;
+                var hmdRotation = newcamera.transform.rotation;
+                lineToWrite += $"{hmdPosition.x}{Delim}{hmdPosition.y}{Delim}{hmdPosition.z}{Delim}" +
+                               $"{hmdRotation.eulerAngles.x}{Delim}{hmdRotation.eulerAngles.y}{Delim}{hmdRotation.eulerAngles.z}{Delim}" +
+                               $"{hmdRotation.x}{Delim}{hmdRotation.y}{Delim}{hmdRotation.z}{Delim}{hmdRotation.w}{Delim}";
+
+                // Log left controller position and rotation
+                if (leftController != null)
+                {
+                    var leftPosition = leftController.transform.position;
+                    var leftRotation = leftController.transform.rotation;
+                    lineToWrite += $"{leftPosition.x}{Delim}{leftPosition.y}{Delim}{leftPosition.z}{Delim}" +
+                                   $"{leftRotation.eulerAngles.x}{Delim}{leftRotation.eulerAngles.y}{Delim}{leftRotation.eulerAngles.z}{Delim}" +
+                                   $"{leftRotation.x}{Delim}{leftRotation.y}{Delim}{leftRotation.z}{Delim}{leftRotation.w}{Delim}";
+                }
+                else
+                {
+                    lineToWrite += $"{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}";
+                }
+
+                // Log right controller position and rotation
+                if (rightController != null)
+                {
+                    var rightPosition = rightController.transform.position;
+                    var rightRotation = rightController.transform.rotation;
+                    lineToWrite += $"{rightPosition.x}{Delim}{rightPosition.y}{Delim}{rightPosition.z}{Delim}" +
+                                   $"{rightRotation.eulerAngles.x}{Delim}{rightRotation.eulerAngles.y}{Delim}{rightRotation.eulerAngles.z}{Delim}" +
+                                   $"{rightRotation.x}{Delim}{rightRotation.y}{Delim}{rightRotation.z}{Delim}{rightRotation.w}{Delim}";
+                }
+                else
+                {
+                    lineToWrite += $"{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}{Delim}";
+                }
+
+                // Log instantiated prefabs
+                foreach (var tag in prefabTags)
+                {
+                    var prefabInstances = GameObject.FindGameObjectsWithTag(tag);
+                    foreach (var instance in prefabInstances)
+                    {
+                        var position = instance.transform.position;
+                        var rotation = instance.transform.rotation;
+                        var localScale = instance.transform.localScale;
+                        var lossyScale = instance.transform.lossyScale;
+                        lineToWrite += $"{position.x}{Delim}{position.y}{Delim}{position.z}{Delim}" +
+                                       $"{rotation.eulerAngles.x}{Delim}{rotation.eulerAngles.y}{Delim}{rotation.eulerAngles.z}{Delim}" +
+                                       $"{rotation.x}{Delim}{rotation.y}{Delim}{rotation.z}{Delim}{rotation.w}{Delim}" +
+                                       $"{localScale.x}{Delim}{localScale.y}{Delim}{localScale.z}{Delim}" +
+                                       $"{lossyScale.x}{Delim}{lossyScale.y}{Delim}{lossyScale.z}{Delim}";
+                                        Debug.Log("Tag" + instance.tag); 
+                    }
         }
 
         // ✅ FAILSAFE repetition at the END (never shifts)
@@ -123,7 +113,7 @@ public class LoggerScript : MonoBehaviour
         _streamWriter.WriteLine(lineToWrite);
         _eventsTriggered.Clear();
     }
-
+    }
     public void StartLogging(string participant, int session)
     {
         _isLogging = true;
@@ -199,12 +189,56 @@ public class LoggerScript : MonoBehaviour
 
     private string GetXRHeader()
     {
-        return
-            $"Unity.frameCount{Delim}" +
-            $"Unity.realtimeSinceStartup{Delim}" +
-            $"Unity.unixTimestamp{Delim}" +
-            $"Unity.Event{Delim}" +
-            $"Unity.Repetition{Delim}";
+        
+           const string prefix = "Unity.";
+            const string hmdPosition = "HMDPosition";
+            const string leftControllerPosition = "LeftControllerPosition";
+            const string rightControllerPosition = "RightControllerPosition";
+
+            const string position = ".position";
+            const string euler = ".rotation.euler";
+            const string quaternion = ".rotation.quaternion";
+
+            const string x = "_x";
+            const string y = "_y";
+            const string z = "_z";
+            const string w = "_w";
+
+            return $"{prefix}frameCount{Delim}" +
+                   $"{prefix}realtimeSinceStartup{Delim}" +
+                   $"{prefix}unixTimestamp{Delim}" +
+                   $"{prefix}Event{Delim}" +
+                    $"{prefix}Repetition{Delim}" +
+                   $"{prefix}{hmdPosition}{position}{x}{Delim}" +
+                   $"{prefix}{hmdPosition}{position}{y}{Delim}" +
+                   $"{prefix}{hmdPosition}{position}{z}{Delim}" +
+                   $"{prefix}{hmdPosition}{euler}{x}{Delim}" +
+                   $"{prefix}{hmdPosition}{euler}{y}{Delim}" +
+                   $"{prefix}{hmdPosition}{euler}{z}{Delim}" +
+                   $"{prefix}{hmdPosition}{quaternion}{x}{Delim}" +
+                   $"{prefix}{hmdPosition}{quaternion}{y}{Delim}" +
+                   $"{prefix}{hmdPosition}{quaternion}{z}{Delim}" +
+                   $"{prefix}{hmdPosition}{quaternion}{w}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{position}{x}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{position}{y}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{position}{z}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{euler}{x}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{euler}{y}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{euler}{z}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{quaternion}{x}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{quaternion}{y}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{quaternion}{z}{Delim}" +
+                   $"{prefix}{leftControllerPosition}{quaternion}{w}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{position}{x}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{position}{y}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{position}{z}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{euler}{x}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{euler}{y}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{euler}{z}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{quaternion}{x}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{quaternion}{y}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{quaternion}{z}{Delim}" +
+                   $"{prefix}{rightControllerPosition}{quaternion}{w}{Delim}";
     }
 
 
